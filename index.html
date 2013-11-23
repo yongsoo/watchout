@@ -8,28 +8,17 @@
 <body>
   <script>
 
-  // $(document).ready(function() {
-  //   var withProperty = [],
-  //       els = document.getElementsByTagName('circle');
-
-  //   for (var i = 0; i < els.length; i++) {
-  //       if (els[i].hasAttribute('property')) {
-  //           withProperty.push(els[i]);
-  //       }
-  //   }
-  // });
-
     var w = window.innerWidth;
     var h = window.innerHeight;
     var radius = 10;
 
-    var drag = d3.behavior.drag().on("drag", dragmove);
-
-    function dragmove(d) {
+    var dragmove = function(d){
       d3.select(this)
           .attr("cx", d.x = Math.max(radius, Math.min(w - radius, d3.event.x)))
           .attr("cy", d.y = Math.max(radius, Math.min(h - radius, d3.event.y)));
     }
+
+    var drag = d3.behavior.drag().on("drag", dragmove);
 
     var svg = d3.select("body")
                 .append("svg")
