@@ -6,7 +6,7 @@
 </head>
 <body>
   <p>score: <span id="currentScore"></span></p>
-  <p>high score: <span id="bestScore"></span></p>
+  <p>high score: <span id="bestScore">0</span></p>
   <script>
 
     var w = window.innerWidth;
@@ -26,9 +26,10 @@
         var circle = d3.select(this);
         var cx = circle.attr('cx');
         var cy = circle.attr('cy');
+        var r = circle.attr('r');
         var x = cx - player.attr('cx');
         var y = cy - player.attr('cy');
-        if (Math.sqrt(x*x + y*y) < radius) {
+        if (Math.sqrt(x*x + y*y) < r) {
           gameOver();
         }
       });
@@ -65,7 +66,7 @@
               setInterval(function(){d3.select(that)
                 .transition()
                 .duration(2000)
-                .attr({r: 10, cx: function(d) { return Math.random()*w }, cy: function(d) { return Math.random()*h }})}, 2000);
+                .attr({r: Math.random()*20 + 10, cx: function(d) { return Math.random()*w }, cy: function(d) { return Math.random()*h }})}, 2000);
            });
 
      d3.timer(detectCollisions);
