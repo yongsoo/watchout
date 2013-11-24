@@ -17,6 +17,23 @@
           .attr("cy", d.y = Math.max(radius, Math.min(h - radius, d3.event.y)));
     }
 
+    var detectCollisions = function() {
+      circles.each(function() {
+        var circle = d3.select(this);
+        var cx = circle.attr('cx');
+        var cy = circle.attr('cy');
+        var x = cx - player.attr('cx');
+        var y = cy - player.attr('cy');
+        if (Math.sqrt(x*x + y*y) < radius) {
+          gameOver();
+        }
+      });
+    };
+
+    var gameOver = function() {
+      alert('GAME OVER!');
+    };
+
     var drag = d3.behavior.drag().on("drag", dragmove);
 
     var svg = d3.select("body")
@@ -42,6 +59,8 @@
                 .duration(2000)
                 .attr({r: 10, cx: function(d) { return Math.random()*w }, cy: function(d) { return Math.random()*h }})}, 2000);
            });
+
+     d3.timer(detectCollisions);
 
   </script>
 </body>
