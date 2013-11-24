@@ -5,11 +5,15 @@
   <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 </head>
 <body>
+  <p>score: <span id="currentScore"></span></p>
+  <p>high score: <span id="bestScore"></span></p>
   <script>
 
     var w = window.innerWidth;
     var h = window.innerHeight;
     var radius = 10;
+    var currScore = 0;
+    var highScore = 0;
 
     var dragmove = function(d){
       d3.select(this)
@@ -31,7 +35,11 @@
     };
 
     var gameOver = function() {
-      alert('GAME OVER!');
+      if (currScore > highScore) {
+        highScore = currScore;
+        d3.select('#bestScore').text(highScore.toString());
+      }
+      currScore = 0;
     };
 
     var drag = d3.behavior.drag().on("drag", dragmove);
@@ -61,6 +69,11 @@
            });
 
      d3.timer(detectCollisions);
+
+     setInterval(function() {
+      currScore++;
+      d3.select('#currentScore').text(currScore.toString());
+     }, 100)
 
   </script>
 </body>
